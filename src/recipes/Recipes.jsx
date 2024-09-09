@@ -29,6 +29,7 @@ class Recipes extends React.Component {
       cookTime: "",
       instructions: "",
       editId: "",
+      display: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.prepareToEditTitle = this.prepareToEditTitle.bind(this)
@@ -43,6 +44,9 @@ class Recipes extends React.Component {
     this.prepareToEditCookTime = this.prepareToEditCookTime.bind(this)
     this.setInstructions = this.setInstructions.bind(this)
     this.prepareToEditInstructions = this.prepareToEditInstructions.bind(this)
+    this.displayRecipe = this.displayRecipe.bind(this)
+    this.saveRecipe = this.saveRecipe.bind(this)
+    this.clearRecipe = this.clearRecipe.bind(this)
   }
   handleChange(e) {
     let { name, value } = e.target
@@ -132,7 +136,7 @@ class Recipes extends React.Component {
       }
     })
   }
-  setOvenTemperature(e){
+  setOvenTemperature(e) {
     e.preventDefault()
     this.setState({
       ...this.state,
@@ -144,7 +148,7 @@ class Recipes extends React.Component {
       isEditOvenTemperature: false
     })
   }
-  setCookTime(e){
+  setCookTime(e) {
     e.preventDefault()
     this.setState({
       ...this.state,
@@ -156,21 +160,21 @@ class Recipes extends React.Component {
       isEditCookTime: false
     })
   }
-  prepareToEditOvenTemperature(){
+  prepareToEditOvenTemperature() {
     this.setState({
       ...this.state,
       ovenTemperature: this.state.recipe.ovenTemperature,
       isEditOvenTemperature: true
     })
   }
-  prepareToEditCookTime(){
+  prepareToEditCookTime() {
     this.setState({
       ...this.state,
       cookTime: this.state.recipe.cookTime,
       isEditCookTime: true
     })
   }
-  setInstructions(e){
+  setInstructions(e) {
     e.preventDefault()
     this.setState({
       recipe: {
@@ -181,14 +185,79 @@ class Recipes extends React.Component {
       isEditInstructions: false
     })
   }
-  prepareToEditInstructions(){
+  prepareToEditInstructions() {
     this.setState({
       ...this.state,
       instructions: this.state.recipe.instructions,
       isEditInstructions: true
     })
   }
+  displayRecipe() {
+    this.setState({
+      ...this.state,
+      display: true
+    })
+  }
+  saveRecipe() {
+    let newRecipe = Object.assign({}, this.state.recipe)
+    newRecipe.id = crypto.randomUUID()
+    this.setState({
+      ...this.state,
+      user: {
+        ...this.state.user,
+        recipes: [newRecipe, ...this.state.user.recipes]
+      },
+      recipe: {
+        title: "",
+        ingredients: [],
+        cookTime: "",
+        ovenTemperature: "",
+        instructions: ""
+      },
+      isEditTitle: false,
+      isEditIngredient: false,
+      isEditOvenTemperature: false,
+      isEditCookTime: false,
+      isEditInstructions: false,
+      title: "",
+      quantity: "",
+      measurement: "",
+      ingredient: "",
+      ovenTemperature: "",
+      cookTime: "",
+      instructions: "",
+      editId: "",
+      display: false
+    })
+  }
+  clearRecipe() {
+    this.setState({
+      ...this.state,
+      recipe: {
+        title: "",
+        ingredients: [],
+        cookTime: "",
+        ovenTemperature: "",
+        instructions: ""
+      },
+      isEditTitle: false,
+      isEditIngredient: false,
+      isEditOvenTemperature: false,
+      isEditCookTime: false,
+      isEditInstructions: false,
+      title: "",
+      quantity: "",
+      measurement: "",
+      ingredient: "",
+      ovenTemperature: "",
+      cookTime: "",
+      instructions: "",
+      editId: "",
+      display: false
+    })
+  }
   render() {
+    console.log(this.state.user)
     return (
       <React.Fragment>
         <h3>Recipes</h3>
@@ -208,6 +277,9 @@ class Recipes extends React.Component {
           prepareToEditOvenTemperature={this.prepareToEditOvenTemperature}
           setInstructions={this.setInstructions}
           prepareToEditInstructions={this.prepareToEditInstructions}
+          displayRecipe={this.displayRecipe}
+          saveRecipe={this.saveRecipe}
+          clearRecipe={this.clearRecipe}
         />
       </React.Fragment>
     );
