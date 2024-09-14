@@ -1,6 +1,7 @@
 import React, { createRef } from "react";
 import FoodInputPanel from "./FoodInputPanel";
 import SelectInputsPanel from "./SelectInputsPanel";
+import sentences from "./sentences";
 
 class AddLibs extends React.Component {
   closeproteins = createRef();
@@ -20,9 +21,13 @@ class AddLibs extends React.Component {
       side: "",
       vegetable: "",
       sentence: "",
+      alprotein: "",
+      alvegetable: "",
+      alside: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.addFood = this.addFood.bind(this);
+    this.makeSentence = this.makeSentence.bind(this);
   }
   handleChange(e) {
     let { name, value } = e.target;
@@ -47,6 +52,17 @@ class AddLibs extends React.Component {
       [key]: "",
     });
   }
+  makeSentence() {
+    let random = sentences[Math.floor(Math.random() * sentences.length)];
+    random = random
+      .replace("XXproteinXX", this.state.alprotein)
+      .replace("XXvegetableXX", this.state.alvegetable)
+      .replace("XXsideXX", this.state.alside);
+    this.setState({
+      ...this.state,
+      sentence: random,
+    });
+  }
   render() {
     return (
       <React.Fragment>
@@ -65,6 +81,10 @@ class AddLibs extends React.Component {
             state={this.state}
           />
         ) : null}
+        {this.state.alprotein && this.state.alvegetable && this.state.alside ? (
+          <button onClick={this.makeSentence}>Make a sentence</button>
+        ) : null}
+        <h3>{this.state.sentence}</h3>
       </React.Fragment>
     );
   }

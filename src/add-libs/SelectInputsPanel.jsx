@@ -16,7 +16,7 @@ const Select = (props) => {
       <label htmlFor={props.name}>
         {plural.replace(plural[0], plural[0].toUpperCase())}:
       </label>
-      <select name={props.name} onChange={props.handleChange}>
+      <select name={"al" + props.name} onChange={(e) => props.handleChange(e)}>
         <Option option={"-- " + plural + " --"} />
         {props.state.user.foods[plural].map((macro) => (
           <Option key={props.name + "-" + macro} option={macro} />
