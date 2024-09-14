@@ -1,4 +1,5 @@
 import Navbar from "./Navbar";
+import LoginModal from "../auth/LoginModal";
 import styles from "./styles";
 
 const Header = (props) => {
@@ -10,7 +11,11 @@ const Header = (props) => {
         </>
       ) : (
         <>
-          <button>Login</button>
+          {props.isModalOpen ? (
+            <LoginModal isLogin={true} isModalOpen={true} />
+          ) : (
+            <button>Login</button>
+          )}
         </>
       )}
     </header>

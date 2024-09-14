@@ -10,10 +10,10 @@ import Recipes from "./recipes/Recipes";
 const App = () => {
   return (
     <>
-      <Header />
+      <Header isAuth={false} isModalOpen={true} />
       <Routes>
-        <Route path="/" element={<PublicLanding />}>
-          <Route index element={<Landing />} />
+        <Route path="/" element={<PublicLanding isAuth={false} />}>
+          <Route index element={<Landing isAuth={false} />} />
         </Route>
         <Route path="/apps" element={<PrivateLanding />}>
           <Route index element={<Landing />} />
