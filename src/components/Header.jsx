@@ -1,3 +1,5 @@
+import { connect } from "react-redux";
+import actions from "../redux/actions";
 import Navbar from "./Navbar";
 import LoginModal from "../auth/LoginModal";
 import styles from "./styles";
@@ -5,16 +7,17 @@ import styles from "./styles";
 const Header = (props) => {
   return (
     <header style={styles.headerStyle}>
-      {props.isAuth ? (
+      {props.auth.isAuth ? (
         <>
           <Navbar />
+          <button onClick={props.logout}>LOGOUT</button>
         </>
       ) : (
         <>
-          {props.isModalOpen ? (
-            <LoginModal isLogin={true} isModalOpen={true} />
+          {props.auth.isModalOpen ? (
+            <LoginModal />
           ) : (
-            <button>Login</button>
+            <button onClick={props.openLoginModal}>Login</button>
           )}
         </>
       )}
@@ -22,4 +25,11 @@ const Header = (props) => {
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  openLoginModal: () => dispatch(actions.openLoginModal()),
+  logout: () => dispatch(actions.logout()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
