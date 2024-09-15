@@ -5,10 +5,11 @@ import actions from "../redux/actions";
 
 class PrivateLanding extends React.Component {
   componentDidMount() {
-    let appUser = Object.assign({}, this.props.auth.user);
-    delete appUser.password;
-    console.log(appUser);
-    this.props.getAppUser(appUser);
+    if (this.props.auth.isAuth) {
+      let appUser = Object.assign({}, this.props.auth.user);
+      delete appUser.password;
+      this.props.getAppUser(appUser);
+    }
   }
   render() {
     return this.props.auth.isAuth ? <Outlet /> : <Navigate to="/" />;

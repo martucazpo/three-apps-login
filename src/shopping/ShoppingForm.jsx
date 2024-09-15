@@ -4,6 +4,7 @@ import actions from "../redux/actions";
 const ShoppingForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!props.shop.isEdit) props.modalRef.current.open = false;
     props.shop.isEdit ? props.exchangeItem() : props.addItemToList();
   };
   return (
@@ -28,6 +29,6 @@ const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => ({
   handleListChange: (target) => dispatch(actions.handleListChange(target)),
   addItemToList: () => dispatch(actions.addItemToList()),
-  exchangeItem: () => dispatch(actions.exchangeItem),
+  exchangeItem: () => dispatch(actions.exchangeItem()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ShoppingForm);

@@ -1,3 +1,6 @@
+import { connect } from "react-redux";
+import actions from "../redux/actions";
+
 const Item = (props) => {
   return (
     <div>
@@ -14,4 +17,10 @@ const Item = (props) => {
   );
 };
 
-export default Item;
+const mapDispatchToProps = (dispatch) => ({
+  prepareToExchangeItem: (item) =>
+    dispatch(actions.prepareToExchangeItem(item)),
+  removeItemFromList: (item) => dispatch(actions.removeItemFromList(item)),
+});
+
+export default connect(null, mapDispatchToProps)(Item);
