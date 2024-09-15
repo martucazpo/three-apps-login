@@ -1,3 +1,6 @@
+import { connect } from "react-redux";
+import actions from "../redux/actions";
+
 const Option = (props) => {
   let formatted = props.option
     .split(" ")
@@ -16,9 +19,12 @@ const Select = (props) => {
       <label htmlFor={props.name}>
         {plural.replace(plural[0], plural[0].toUpperCase())}:
       </label>
-      <select name={"al" + props.name} onChange={(e) => props.handleChange(e)}>
+      <select
+        name={"al" + props.name}
+        onChange={(e) => props.handleLibsChange(e.target)}
+      >
         <Option option={"-- " + plural + " --"} />
-        {props.state.user.foods[plural].map((macro) => (
+        {props.addlib.user.foods[plural].map((macro) => (
           <Option key={props.name + "-" + macro} option={macro} />
         ))}
       </select>
@@ -34,12 +40,18 @@ const SelectInputsPanel = (props) => {
         <Select
           key={category}
           name={category}
-          handleChange={props.handleChange}
-          state={props.state}
+          addlib={props.addlib}
+          handleLibsChange={props.handleLibsChange}
         />
       ))}
     </div>
   );
 };
 
-export default SelectInputsPanel;
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  handleLibsChange: (target) => dispatch(actions.handleLibsChange(target)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectInputsPanel);
